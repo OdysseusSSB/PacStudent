@@ -394,6 +394,7 @@ GameObject:
   - component: {fileID: 1301845673}
   - component: {fileID: 1301845674}
   - component: {fileID: 1301845675}
+  - component: {fileID: 1301845676}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: Untagged
@@ -528,6 +529,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1301845676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301845672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c362efece0e0c2c46bf504d2cd68440a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffectsManager
+  audioSource: {fileID: 1301845675}
+  soundEffects:
+  - soundEffect: 0
+    clip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
+  - soundEffect: 1
+    clip: {fileID: 8300000, guid: 12bb52943e171e149a6806d78c3fbedf, type: 3}
+  - soundEffect: 2
+    clip: {fileID: 8300000, guid: 9fe73e6db461dd44189a66d2393c1db9, type: 3}
+  - soundEffect: 3
+    clip: {fileID: 8300000, guid: 906f4391bf3746749bb40ea3f2d6b14f, type: 3}
+  - soundEffect: 4
+    clip: {fileID: 8300000, guid: 57f8ea69f5dcaec42b507a8c51034bab, type: 3}
+  - soundEffect: 5
+    clip: {fileID: 8300000, guid: bd2845a71c1c4204db0afa726ac6fe0b, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
