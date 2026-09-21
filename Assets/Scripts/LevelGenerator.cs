@@ -7,6 +7,9 @@ public class NewMonoBehaviourScript : MonoBehaviour
     [SerializeField]
     private GameObject PowerUpPrefab;
 
+    [SerializeField]
+    private Camera Camera;
+
     private int[,] levelMap =
         {
         {1,2,2,2,2,2,2,2,2,2,2,2,2,7},
@@ -37,22 +40,31 @@ public class NewMonoBehaviourScript : MonoBehaviour
         }
 
         levelMap = MirrorLevelMap(levelMap);
-        Debug.Log(levelMap.GetLength(0) + " " + levelMap.GetLength(1));
+        //Debug.Log(levelMap.GetLength(0) + " " + levelMap.GetLength(1));
         int[,] rotations = GetRotations(levelMap);
         int rows = levelMap.GetLength(0);
         int cols = levelMap.GetLength(1);
+
+        if((float)cols > 1.5f * rows)
+        {
+            Camera.orthographicSize = 0.75f * cols + 1;
+        }
+        else
+        {
+            Camera.orthographicSize = 0.5f * rows + 1;
+        }
 
         // Place Tiles
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
-                Debug.Log("Tile at (" + i + ", " + j + "): Value = " + levelMap[i, j] + ", Rotation = " + rotations[i, j]);
-                GameObject tile = Instantiate(tilePrefab, new Vector3(j - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
+                //Debug.Log("Tile at (" + i + ", " + j + "): Value = " + levelMap[i, j] + ", Rotation = " + rotations[i, j]);
+                GameObject tile = Instantiate(tilePrefab, new Vector3(j + 1 - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
                 tile.GetComponent<Animator>().SetInteger("Type", levelMap[i, j]);
                 if (levelMap[i, j] == 6)
                 {
-                    Instantiate(PowerUpPrefab, new Vector3(j - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.identity);
+                    Instantiate(PowerUpPrefab, new Vector3(j + 1 - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.identity);
                 }
             }
         }
