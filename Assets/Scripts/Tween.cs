@@ -11,14 +11,19 @@ public class Tween
         Duration = duration;
     }
 
-    public void UpdatePosition()
+    public bool UpdatePosition()
     {
-        Target.position = Vector3.Lerp(StartPos, EndPos, Cube(Time.time - StartTime) / Cube(Duration));
-    }
-
-    private float Cube(float x)
-    {
-        return (x * x * x);
+        if(Time.time > StartTime + Duration)
+        {
+            Target.position = EndPos;
+            return true;
+            //Tween is complete
+        }
+        else if (Time.time > StartTime)
+        {
+            Target.position = Vector3.Lerp(StartPos, EndPos, (Time.time - StartTime) / Duration);
+        }
+        return false;
     }
     public Transform Target { get; private set; }
 
