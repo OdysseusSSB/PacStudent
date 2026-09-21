@@ -60,7 +60,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
             for (int j = 0; j < cols; j++)
             {
                 //Debug.Log("Tile at (" + i + ", " + j + "): Value = " + levelMap[i, j] + ", Rotation = " + rotations[i, j]);
-                GameObject tile = Instantiate(tilePrefab, new Vector3(j + 1 - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
+                GameObject tile = Instantiate(tilePrefab, new Vector3(j + 1f - (float)rows / 2, -i + 0.5f + (float)cols / 2, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
                 tile.GetComponent<Animator>().SetInteger("Type", levelMap[i, j]);
                 if (levelMap[i, j] == 6)
                 {
