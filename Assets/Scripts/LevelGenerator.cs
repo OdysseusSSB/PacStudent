@@ -48,11 +48,11 @@ public class NewMonoBehaviourScript : MonoBehaviour
             for (int j = 0; j < cols; j++)
             {
                 Debug.Log("Tile at (" + i + ", " + j + "): Value = " + levelMap[i, j] + ", Rotation = " + rotations[i, j]);
-                GameObject tile = Instantiate(tilePrefab, new Vector3(j, -i, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
+                GameObject tile = Instantiate(tilePrefab, new Vector3(j - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.Euler(0, 0, rotations[i, j] * 90));
                 tile.GetComponent<Animator>().SetInteger("Type", levelMap[i, j]);
                 if (levelMap[i, j] == 6)
                 {
-                    Instantiate(PowerUpPrefab, new Vector3(j, -i, 0), Quaternion.identity);
+                    Instantiate(PowerUpPrefab, new Vector3(j - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.identity);
                 }
             }
         }
@@ -62,23 +62,24 @@ public class NewMonoBehaviourScript : MonoBehaviour
     {
         int rows = originalMap.GetLength(0);
         int cols = originalMap.GetLength(1);
-        int[,] mirroredMap = new int[rows * 2 - 1, cols * 2];
+        int[,] mirrored = new int[rows * 2 - 1, cols * 2];
 
         for (int i = 0; i < rows; i++)
         {
-            for (int j = cols; j < cols * 2 - 1; j++)
+            for (int j = 0; j < cols; j++)
             {
-                mirroredMap[i, j] = originalMap[i, cols - 1 - (j - cols)];
+                mirrored[i, j] = originalMap[i, j];
+                mirrored[i, cols * 2 - 1 - j] = originalMap[i, j];
             }
         }
         for (int i = rows; i < rows * 2 - 1; i++)
         {
-            for (int j = 0; j < cols * 2 - 1; j++)
+            for (int j = 0; j < cols * 2; j++)
             {
-                mirroredMap[i, j] = mirroredMap[rows * 2 - 2 - i, j];
+                mirrored[i, j] = mirrored[rows * 2 - 2 - i, j];
             }
         }
-        return mirroredMap;
+        return mirrored;
     }
 
     int[,] GetRotations(int[,] map)
@@ -95,19 +96,41 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 // Rule for Corner Walls
                 if (tileValue == 1 || tileValue == 3)
                 {
-                    if (i - 1 >= 0 && IsWall(map[i - 1, j]))
+                    if (i - 1 >= 0 && IsWall(map[i - 1, j]) && i + 1 < rows && IsWall(map[i + 1, j])
+                    || j - 1 >= 0 && IsWall(map[i, j - 1]) && j + 1 < cols && IsWall(map[i, j + 1]))
+                    // There is a pair fo double walls
+                    {
+                        if (i - 1 >= 0 && j - 1 >= 0 && !IsWall(map[i - 1, j - 1]))
+                        {
+                            rotations[i, j] = 2;
+                        }
+                        else if (i - 1 >= 0 && j + 1 < cols && !IsWall(map[i - 1, j + 1]))
+                        {
+                            rotations[i, j] = 1;
+                        }
+                        else if (i + 1 < rows && j + 1 < cols && !IsWall(map[i + 1, j + 1]))
+                        {
+                            rotations[i, j] = 0;
+                        }
+                        else if (i + 1 < rows && j - 1 >= 0 && !IsWall(map[i + 1, j - 1]))
+                        {
+                            rotations[i, j] = 3;
+                        }
+                    }
+
+                    else if (i - 1 >= 0 && IsWall(map[i - 1, j]))
                     // There is a wall above
                     {
                         rotations[i, j] = 1;
                         if (j + 1 < cols && IsWall(map[i, j + 1]))
                         // There is a wall to the right
                         {
-                            rotations[i, j] = 0;
+                            rotations[i, j] = 1;
                         }
                         else
                         // There is a wall to the left
                         {
-                            rotations[i, j] = 1;
+                            rotations[i, j] = 2;
                         }
                     }
                     else
@@ -117,12 +140,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
                         if (j + 1 < cols && IsWall(map[i, j + 1]))
                         // There is a wall to the right
                         {
-                            rotations[i, j] = 3;
+                            rotations[i, j] = 4;
                         }
                         else
                         // There is a wall to the left
                         {
-                            rotations[i, j] = 2;
+                            rotations[i, j] = 3;
                         }
                     }
                 }
@@ -132,12 +155,12 @@ public class NewMonoBehaviourScript : MonoBehaviour
                     if (i - 1 >= 0 && IsWall(map[i - 1, j]) && i + 1 < rows && IsWall(map[i + 1, j]))
                     // There is a wall above and below
                     {
-                        rotations[i, j] = 0;
+                        rotations[i, j] = 1;
                     }
                     else
                     // There is a wall beside
                     {
-                        rotations[i, j] = 1;
+                        rotations[i, j] = 0;
                     }
                 }
                 else if (tileValue == 7)
