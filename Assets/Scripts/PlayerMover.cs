@@ -5,9 +5,14 @@ public class PlayerMover : MonoBehaviour
     [SerializeField]
     private GameObject player;
     Animator animator;
+    [SerializeField]
+    private AudioSource audioSource;
     private Tweener tweener;
     private int direction;
+    private float lastAudioScheduled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    private AudioClip footstepClip;
     void Start()
     {
         animator = player.GetComponent<Animator>();
@@ -17,6 +22,8 @@ public class PlayerMover : MonoBehaviour
         tweener.AddTween(player.transform, player.transform.position + new Vector3(5f, 0, 0), player.transform.position + new Vector3(5f, -4f, 0), 2.5f, 2f);
         tweener.AddTween(player.transform, player.transform.position + new Vector3(5f, -4f, 0), player.transform.position + new Vector3(0, -4f, 0), 4.5f, 2.5f);
         tweener.AddTween(player.transform, player.transform.position + new Vector3(0, -4f, 0), player.transform.position + new Vector3(0, 0, 0), 7f, 2f);
+
+        lastAudioScheduled = -1f;
     }
 
     // Update is called once per frame
@@ -43,5 +50,11 @@ public class PlayerMover : MonoBehaviour
             direction = 2;
         }
         
+        if(Time.time - lastAudioScheduled > 0f)
+        {
+            audioSource.clip = footstepClip;
+            audioSource.PlayScheduled(lastAudioScheduled + 0.5f);
+            lastAudioScheduled += 0.5f;
+        }
     }
 }

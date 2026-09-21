@@ -16,12 +16,13 @@ public class Tweener : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for(int i = activeTweens.Count - 1; i >= 0; i--)
+        for(int i = 0; i < activeTweens.Count; i++)
         {
             Tween tween = activeTweens[i];
             if(tween.UpdatePosition())
             {
                 activeTweens.RemoveAt(i);
+                i--;
             }
         }
     }
