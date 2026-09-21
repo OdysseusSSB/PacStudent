@@ -64,7 +64,7 @@ public class NewMonoBehaviourScript : MonoBehaviour
                 tile.GetComponent<Animator>().SetInteger("Type", levelMap[i, j]);
                 if (levelMap[i, j] == 6)
                 {
-                    Instantiate(PowerUpPrefab, new Vector3(j + 1 - (float)rows / 2, -i + (float)cols / 2, 0), Quaternion.identity);
+                    Instantiate(PowerUpPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
                 }
             }
         }
