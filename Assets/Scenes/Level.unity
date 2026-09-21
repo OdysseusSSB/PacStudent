@@ -904,9 +904,9 @@ Tilemap:
   - first: {x: -1, y: -14, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -914,9 +914,9 @@ Tilemap:
   - first: {x: 0, y: -14, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 1
-      m_TileMatrixIndex: 0
+      m_TileIndex: 3
+      m_TileSpriteIndex: 3
+      m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -8897,13 +8897,13 @@ Tilemap:
     m_RefCount: 153
     m_Data: {fileID: 11400000, guid: e6042e43f8dce694ab4c12b04bf50334, type: 2}
   - serializedVersion: 2
-    m_RefCount: 130
+    m_RefCount: 128
     m_Data: {fileID: 11400000, guid: 434be3b3a7c194343ba7466e31f98f23, type: 2}
   - serializedVersion: 2
     m_RefCount: 16
     m_Data: {fileID: 11400000, guid: 918d70b2f953ccd4faaa9dbfff4c9bb0, type: 2}
   - serializedVersion: 2
-    m_RefCount: 2
+    m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 09378171d825ede47b5c30da434164e2, type: 2}
   - serializedVersion: 2
     m_RefCount: 218
@@ -8925,13 +8925,13 @@ Tilemap:
     m_RefCount: 153
     m_Data: {fileID: -208878139, guid: 2cfe76324ae50c343b2f65a0da06bcf7, type: 3}
   - serializedVersion: 2
-    m_RefCount: 130
+    m_RefCount: 128
     m_Data: {fileID: -1235971007, guid: 2cfe76324ae50c343b2f65a0da06bcf7, type: 3}
   - serializedVersion: 2
     m_RefCount: 16
     m_Data: {fileID: -732316135, guid: 2cfe76324ae50c343b2f65a0da06bcf7, type: 3}
   - serializedVersion: 2
-    m_RefCount: 2
+    m_RefCount: 4
     m_Data: {fileID: -1325560469, guid: 2cfe76324ae50c343b2f65a0da06bcf7, type: 3}
   - serializedVersion: 2
     m_RefCount: 218
@@ -8950,7 +8950,7 @@ Tilemap:
     m_Data: {fileID: 379303658, guid: 2cfe76324ae50c343b2f65a0da06bcf7, type: 3}
   m_TileMatrixArray:
   - serializedVersion: 2
-    m_RefCount: 542
+    m_RefCount: 540
     m_Data:
       e00: 1
       e01: 0
@@ -8988,7 +8988,7 @@ Tilemap:
       e32: 0
       e33: 1
   - serializedVersion: 2
-    m_RefCount: 84
+    m_RefCount: 86
     m_Data:
       e00: -1
       e01: 0
