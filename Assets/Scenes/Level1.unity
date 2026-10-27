@@ -9910,66 +9910,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1022120633
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1022120636}
-  - component: {fileID: 1022120635}
-  - component: {fileID: 1022120634}
-  m_Layer: 0
-  m_Name: PacStudentController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1022120634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022120633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7966cab0dc1263c49a5412c7f16d1b9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMover
-  player: {fileID: 686068482}
-  audioSource: {fileID: 1185215695549598557}
-  footstepClip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
---- !u!114 &1022120635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022120633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38bd6ad6d13a4fc4a8d0b52300cdfc4b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Tweener
---- !u!4 &1022120636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022120633}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.5, y: -13.5, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1185215695549598554}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1041063707
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11141,20 +11081,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4652301619854453156, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1022120636}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5874879306282072573, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1185215695549598557}
+    - targetCorrespondingSourceObject: {fileID: 5874879306282072573, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1185215695549598559}
+    - targetCorrespondingSourceObject: {fileID: 5874879306282072573, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1185215695549598558}
   m_SourcePrefab: {fileID: 100100000, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
---- !u!4 &1185215695549598554 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4652301619854453156, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
-  m_PrefabInstance: {fileID: 1185215695549598553}
-  m_PrefabAsset: {fileID: 0}
 --- !u!82 &1185215695549598557
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11252,6 +11190,31 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1185215695549598558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686068482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bd6ad6d13a4fc4a8d0b52300cdfc4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tweener
+--- !u!114 &1185215695549598559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686068482}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7966cab0dc1263c49a5412c7f16d1b9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PacStudentController
+  footstepClip: {fileID: 0}
 --- !u!1001 &4634501344660531500
 PrefabInstance:
   m_ObjectHideFlags: 0

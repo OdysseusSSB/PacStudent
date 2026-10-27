@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class PacStudentController : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject player;
     Animator animator;
-    [SerializeField]
     private AudioSource audioSource;
     private Tweener tweener;
     private int direction;
@@ -15,14 +12,15 @@ public class PacStudentController : MonoBehaviour
     private AudioClip footstepClip;
     void Start()
     {
-        animator = player.GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
         tweener = GetComponent<Tweener>();
-        tweener.AddTween(player.transform, player.transform.position, player.transform.position + new Vector3(5f, 0, 0), 0f, 2.5f);
-        tweener.AddTween(player.transform, player.transform.position + new Vector3(5f, 0, 0), player.transform.position + new Vector3(5f, -4f, 0), 2.5f, 2f);
-        tweener.AddTween(player.transform, player.transform.position + new Vector3(5f, -4f, 0), player.transform.position + new Vector3(0, -4f, 0), 4.5f, 2.5f);
-        tweener.AddTween(player.transform, player.transform.position + new Vector3(0, -4f, 0), player.transform.position + new Vector3(0, 0, 0), 7f, 2f);
+        tweener.AddTween(transform, transform.position, transform.position + new Vector3(5f, 0, 0), 0f, 2.5f);
+        tweener.AddTween(transform, transform.position + new Vector3(5f, 0, 0), transform.position + new Vector3(5f, -4f, 0), 2.5f, 2f);
+        tweener.AddTween(transform, transform.position + new Vector3(5f, -4f, 0), transform.position + new Vector3(0, -4f, 0), 4.5f, 2.5f);
+        tweener.AddTween(transform, transform.position + new Vector3(0, -4f, 0), transform.position + new Vector3(0, 0, 0), 7f, 2f);
 
+        audioSource = GetComponent<AudioSource>();
         lastAudioScheduled = -1f;
     }
 
