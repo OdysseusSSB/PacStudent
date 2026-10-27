@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class Manager : MonoBehaviour
         timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
         scoreDisplay.text = FormatScore(score);
         ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostUnscaredTime - Time.timeSinceLevelLoad);
+    }
+
+    public void ExitLevel()
+    {
+        SceneManager.LoadScene("StartScene");
     }
 
     private string FormatTime(float time)
