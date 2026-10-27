@@ -10807,7 +10807,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4532825673930424911, guid: c274a6fe26677924db7252d10c61aa11, type: 3}
       propertyPath: m_Name
-      value: GhostGreen
+      value: Ghost2
       objectReference: {fileID: 0}
     - target: {fileID: 8326787506030944394, guid: c274a6fe26677924db7252d10c61aa11, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10904,7 +10904,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8611434185525908022, guid: abb48ef92a3da114cba8a10eba4deb74, type: 3}
       propertyPath: m_Name
-      value: GhostYellow
+      value: Ghost4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611434185525908022, guid: abb48ef92a3da114cba8a10eba4deb74, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10961,7 +10965,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7132680527482829471, guid: 4024192f85dc6ac4185a388b11b0fb3e, type: 3}
       propertyPath: m_Name
-      value: GhostRed
+      value: Ghost1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10978,7 +10982,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 521252932558316212, guid: e9c0660b31626294e971c0057cb7c87f, type: 3}
       propertyPath: m_Name
-      value: GhostBlue
+      value: Ghost3
       objectReference: {fileID: 0}
     - target: {fileID: 3395939678899321686, guid: e9c0660b31626294e971c0057cb7c87f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -11036,9 +11040,9 @@ SceneRoots:
   - {fileID: 1185215695549598553}
   - {fileID: 1706195517}
   - {fileID: 6893933399526224922}
+  - {fileID: 4634501344660531500}
   - {fileID: 8282909505135509926}
   - {fileID: 6602724424186167716}
-  - {fileID: 4634501344660531500}
   - {fileID: 1481132659}
   - {fileID: 1655364323}
   - {fileID: 1041063707}
