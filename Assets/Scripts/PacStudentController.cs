@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMover : MonoBehaviour
+public class PacStudentController : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
