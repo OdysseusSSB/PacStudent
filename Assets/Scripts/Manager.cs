@@ -22,7 +22,7 @@ public class Manager : MonoBehaviour
     {
         timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
         scoreDisplay.text = FormatScore(score);
-        ghostTimeDisplay.text = FormatGhostUnscaredTime(Time.timeSinceLevelLoad - ghostUnscaredTime);
+        ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostUnscaredTime - Time.timeSinceLevelLoad);
     }
 
     private string FormatTime(float time)
