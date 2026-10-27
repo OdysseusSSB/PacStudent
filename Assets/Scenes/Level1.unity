@@ -11214,6 +11214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7966cab0dc1263c49a5412c7f16d1b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PacStudentController
+  level: {fileID: 1626282017}
   footstepClip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
 --- !u!1001 &4634501344660531500
 PrefabInstance:

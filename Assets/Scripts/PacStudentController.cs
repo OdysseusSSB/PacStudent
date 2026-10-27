@@ -11,9 +11,12 @@ enum Direction
 public class PacStudentController : MonoBehaviour
 {
     Animator animator;
+    [SerializeField]
+    private LevelGenerator level;
     private AudioSource audioSource;
     private Tweener tweener;
     private KeyCode lastInput;
+    private Direction direction;
     private float lastAudioScheduled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
@@ -21,12 +24,7 @@ public class PacStudentController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
-
         tweener = GetComponent<Tweener>();
-        tweener.AddTween(transform, transform.position, transform.position + new Vector3(5f, 0, 0), 0f, 2.5f);
-        tweener.AddTween(transform, transform.position + new Vector3(5f, 0, 0), transform.position + new Vector3(5f, -4f, 0), 2.5f, 2f);
-        tweener.AddTween(transform, transform.position + new Vector3(5f, -4f, 0), transform.position + new Vector3(0, -4f, 0), 4.5f, 2.5f);
-        tweener.AddTween(transform, transform.position + new Vector3(0, -4f, 0), transform.position + new Vector3(0, 0, 0), 7f, 2f);
 
         audioSource = GetComponent<AudioSource>();
         lastAudioScheduled = -1f;
@@ -36,11 +34,19 @@ public class PacStudentController : MonoBehaviour
     void Update()
     {
         EvaluateInput();
-        Move();
-        if (Time.time >= lastAudioScheduled + 0.5f)
+        if(! tweener.TweenExists(transform))
         {
-            audioSource.PlayOneShot(footstepClip);
-            lastAudioScheduled = Time.time;
+            animator.SetInteger("Direction", -1); // Reset to idle when not moving
+            lastAudioScheduled = Time.time; // Reset the last audio scheduled time when not moving
+            Move();
+        }
+        else
+        {
+            if (Time.time >= lastAudioScheduled + 0.5f)
+            {
+                audioSource.PlayOneShot(footstepClip);
+                lastAudioScheduled = Time.time;
+            }
         }
     }
 
@@ -66,29 +72,39 @@ public class PacStudentController : MonoBehaviour
 
     private void Move()
     {
-        Direction direction;
+        Direction inputDirection;
         switch(lastInput)
         {
             case KeyCode.W:
-                direction = Direction.Up;
+                inputDirection = Direction.Up;
                 break;
             case KeyCode.S:
-                direction = Direction.Down;
+                inputDirection = Direction.Down;
                 break;
             case KeyCode.A:
-                direction = Direction.Left;
+                inputDirection = Direction.Left;
                 break;
             case KeyCode.D:
-                direction = Direction.Right;
+                inputDirection = Direction.Right;
                 break;
             default:
-                return; // No valid input
+                inputDirection = direction;
+                break;
         }
 
-        if(true) // Collision check
+        if(! level.IsWall(transform.position + DirectionToVector3(inputDirection))) // Collision check
         {
+            direction = inputDirection;
             animator.SetInteger("Direction", (int)direction);
-            tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.5f);
+            tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
+        }
+        else if(! level.IsWall(transform.position + DirectionToVector3(direction)))
+        {
+            tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
+        }
+        else
+        {
+            // Set animation speed to 0
         }
     }
 
