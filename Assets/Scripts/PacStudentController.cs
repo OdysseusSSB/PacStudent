@@ -1,11 +1,19 @@
 using UnityEngine;
 
+enum Direction
+{
+    Up = 2,
+    Down = 0,
+    Left = 1,
+    Right = 3
+}
+
 public class PacStudentController : MonoBehaviour
 {
     Animator animator;
     private AudioSource audioSource;
     private Tweener tweener;
-    private int direction;
+    private KeyCode lastInput;
     private float lastAudioScheduled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
@@ -27,32 +35,77 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time < 2.5f && direction != 3)
+        EvaluateInput();
+        Move();
+        if (Time.time >= lastAudioScheduled + 0.5f)
         {
-            animator.SetInteger("Direction", 3);
-            direction = 3;
+            audioSource.PlayOneShot(footstepClip);
+            lastAudioScheduled = Time.time;
         }
-        else if(Time.time >= 2.5f && Time.time < 4.5f && direction != 0)
+    }
+
+    private void EvaluateInput()
+    {
+        if(Input.GetKeyDown(KeyCode.W))
         {
-            animator.SetInteger("Direction", 0);
-            direction = 0;
+            lastInput = KeyCode.W;
         }
-        else if(Time.time >= 4.5f && Time.time < 7f && direction != 1)
+        else if(Input.GetKeyDown(KeyCode.S))
         {
-            animator.SetInteger("Direction", 1);
-            direction = 1;
+            lastInput = KeyCode.S;
         }
-        else if(Time.time >= 7f && direction != 2)
+        else if(Input.GetKeyDown(KeyCode.A))
         {
-            animator.SetInteger("Direction", 2);
-            direction = 2;
+            lastInput = KeyCode.A;
         }
-        
-        if(Time.time - lastAudioScheduled > 0f)
+        else if(Input.GetKeyDown(KeyCode.D))
         {
-            audioSource.clip = footstepClip;
-            audioSource.PlayScheduled(lastAudioScheduled + 0.5f);
-            lastAudioScheduled += 0.5f;
+            lastInput = KeyCode.D;
+        }
+    }
+
+    private void Move()
+    {
+        Direction direction;
+        switch(lastInput)
+        {
+            case KeyCode.W:
+                direction = Direction.Up;
+                break;
+            case KeyCode.S:
+                direction = Direction.Down;
+                break;
+            case KeyCode.A:
+                direction = Direction.Left;
+                break;
+            case KeyCode.D:
+                direction = Direction.Right;
+                break;
+            default:
+                return; // No valid input
+        }
+
+        if(true) // Collision check
+        {
+            animator.SetInteger("Direction", (int)direction);
+            tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.5f);
+        }
+    }
+
+    Vector3 DirectionToVector3(Direction direction)
+    {
+        switch(direction)
+        {
+            case Direction.Up:
+                return new Vector3(0, 1, 0);
+            case Direction.Down:
+                return new Vector3(0, -1, 0);
+            case Direction.Left:
+                return new Vector3(-1, 0, 0);
+            case Direction.Right:
+                return new Vector3(1, 0, 0);
+            default:
+                return Vector3.zero;
         }
     }
 }
