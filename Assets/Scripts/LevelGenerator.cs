@@ -6,7 +6,8 @@ public class LevelGenerator : MonoBehaviour
     private GameObject[] OldObjects;
     [SerializeField]
     private GameObject PowerUpPrefab;
-
+    [SerializeField]
+    private GameObject PelletPrefab;
     [SerializeField]
     private Camera Camera;
 
@@ -28,6 +29,8 @@ public class LevelGenerator : MonoBehaviour
         {2,2,2,2,2,1,5,3,3,0,4,0,0,0},
         {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
         };
+
+    private int pellets;
 
     [SerializeField]
     private GameObject tilePrefab;
@@ -66,10 +69,19 @@ public class LevelGenerator : MonoBehaviour
                 {
                     Instantiate(PowerUpPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
                 }
+                if (levelMap[i, j] == 5)
+                {
+                    Instantiate(PelletPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
+                    pellets++;
+                }
             }
         }
     }
 
+    public int GetPellets()
+    {
+        return pellets;
+    }
     int[,] MirrorLevelMap(int[,] originalMap)
     {
         int rows = originalMap.GetLength(0);
@@ -207,7 +219,26 @@ public class LevelGenerator : MonoBehaviour
 
     bool IsWall(int tileValue)
     {
+        int cols = levelMap.GetLength(1);
         return tileValue == 1 || tileValue == 2 || tileValue == 3 || tileValue == 4 || tileValue == 7 || tileValue == 8;
+    }
+
+    public bool IsInYBound(Vector2 position)
+    {
+        int rows = levelMap.GetLength(0);
+        return position.y - 0.5f < (float)rows / 2 && position.y - 0.5f > - (float)rows / 2;
+    }
+
+    public bool IsInXBound(Vector2 position)
+    {
+        int cols = levelMap.GetLength(1);
+        return position.x < (float)cols / 2 && position.x > - (float)cols / 2;
+        /*int i = Mathf.RoundToInt(0.5f + (float)cols / 2 - position.y);
+        if(i < 0 || i >= levelMap.GetLength(1))
+        {
+            return false;
+        }
+        return true;*/
     }
 
     public bool IsWall(Vector2 position)
