@@ -25,6 +25,7 @@ public class PacStudentController : MonoBehaviour
     private AudioClip footstepClip;
     [SerializeField]
     private AudioClip collisionClip;
+    private bool isColliding = false;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -103,17 +104,22 @@ public class PacStudentController : MonoBehaviour
             direction = inputDirection;
             animator.SetInteger("Direction", (int)direction);
             tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
+            isColliding = false;
         }
         else if(! level.IsWall(transform.position + DirectionToVector3(direction)))
         {
             tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
+            isColliding = false;
         }
         else
         {
-            collisionPS.emission.SetBursts(new ParticleSystem.Burst[]
-            {
-                new ParticleSystem.Burst(2.0f, 100)
-            });
+            if(!isColliding) {
+                ParticleSystem collisionPSInstance = Instantiate(collisionPS, transform.position + DirectionToVector3(direction) * 0.5f, Quaternion.identity);
+                audioSource.PlayOneShot(collisionClip);
+                isColliding = true;
+                Debug.Log("Collided");
+                Debug.Log(collisionPSInstance);
+            }
         }
     }
 
