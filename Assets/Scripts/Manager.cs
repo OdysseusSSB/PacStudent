@@ -9,11 +9,17 @@ public class Manager : MonoBehaviour
     public TMP_Text ghostTimeDisplay;
     public TMP_Text scoreDisplay;
     [SerializeField]
-    GameObject[] ghosts;
+    GhostController[] ghosts;
     private int score = 0;
     private float ghostUnscaredTime = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    /*void Awake()
+    {
+        for (int i = 0; i < ghosts.Length; i++)
+            Debug.Log($"Awake: ghosts[{i}] = {(ghosts[i] ? ghosts[i].name : "NULL")}", this);
+    }*/
+
     void Start()
     {
         scoreDisplay.text = FormatScore(score);
@@ -27,18 +33,16 @@ public class Manager : MonoBehaviour
         ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostTime);
         if(ghostTime < 3.0f && ghostTime > 0)
         {
-            foreach(GameObject ghost in ghosts)
+            foreach(GhostController ghost in ghosts)
             {
-                Animator animator = ghost.GetComponent<Animator>();
-                animator.SetInteger("State", 3);
+                ghost.Recover();
             }
         }
         else if(ghostTime <= 0)
         {
-            foreach(GameObject ghost in ghosts)
+            foreach(GhostController ghost in ghosts)
             {
-                Animator animator = ghost.GetComponent<Animator>();
-                animator.SetInteger("State", 0);
+                ghost.BeNormal();
             }
         }
     }
@@ -73,9 +77,9 @@ public class Manager : MonoBehaviour
 
     public void ScareGhosts()
     {
-        foreach(GameObject ghost in ghosts)
+        foreach(GhostController ghost in ghosts)
         {
-            ghost.GetComponent<Animator>().SetInteger("State", 1);
+            ghost.Scare();
         }
         ghostUnscaredTime = Time.timeSinceLevelLoad + 10f;
     }
