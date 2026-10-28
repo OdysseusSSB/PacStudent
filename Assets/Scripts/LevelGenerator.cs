@@ -6,6 +6,8 @@ public class LevelGenerator : MonoBehaviour
     private GameObject[] OldObjects;
     [SerializeField]
     private GameObject PowerUpPrefab;
+    [SerializeField]
+    private GameObject PelletPrefab;
 
     [SerializeField]
     private Camera Camera;
@@ -65,6 +67,10 @@ public class LevelGenerator : MonoBehaviour
                 if (levelMap[i, j] == 6)
                 {
                     Instantiate(PowerUpPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
+                }
+                if (levelMap[i, j] == 5)
+                {
+                    Instantiate(PelletPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
                 }
             }
         }
