@@ -258,6 +258,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33434187}
   m_CullTransparentMesh: 1
+--- !u!1 &80072049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 521252932558316212, guid: e9c0660b31626294e971c0057cb7c87f, type: 3}
+  m_PrefabInstance: {fileID: 8282909505135509926}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &121068241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5961111714808647381, guid: 6e06e2f2617784a4bb359dc6815a8f84, type: 3}
@@ -798,6 +803,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &414780904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8611434185525908022, guid: abb48ef92a3da114cba8a10eba4deb74, type: 3}
+  m_PrefabInstance: {fileID: 6602724424186167716}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &587765850 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5961111714808647381, guid: 6e06e2f2617784a4bb359dc6815a8f84, type: 3}
@@ -10403,6 +10413,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1571476249 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7132680527482829471, guid: 4024192f85dc6ac4185a388b11b0fb3e, type: 3}
+  m_PrefabInstance: {fileID: 6893933399526224922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1589648271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8326787506030944394, guid: c274a6fe26677924db7252d10c61aa11, type: 3}
@@ -10728,9 +10743,10 @@ GameObject:
   - component: {fileID: 1992551482}
   - component: {fileID: 1992551485}
   - component: {fileID: 1992551484}
+  - component: {fileID: 1992551486}
   m_Layer: 0
   m_Name: Cherry
-  m_TagString: Untagged
+  m_TagString: Cherry
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10834,6 +10850,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CherryController
   level: {fileID: 1626282017}
+--- !u!61 &1992551486
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992551481}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!1 &2007901912 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4532825673930424911, guid: c274a6fe26677924db7252d10c61aa11, type: 3}
+  m_PrefabInstance: {fileID: 4634501344660531500}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2062793074
 GameObject:
   m_ObjectHideFlags: 0
@@ -10881,6 +10948,11 @@ MonoBehaviour:
   timeDisplay: {fileID: 1245380845}
   ghostTimeDisplay: {fileID: 855155261}
   scoreDisplay: {fileID: 1732575127}
+  ghosts:
+  - {fileID: 1571476249}
+  - {fileID: 2007901912}
+  - {fileID: 80072049}
+  - {fileID: 414780904}
 --- !u!1 &2083016644
 GameObject:
   m_ObjectHideFlags: 0
@@ -11161,6 +11233,8 @@ MonoBehaviour:
   collisionPS: {fileID: 2553343332124437041, guid: 9448bcf46824bd24392922fb64659e70, type: 3}
   footstepClip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
   collisionClip: {fileID: 8300000, guid: 12bb52943e171e149a6806d78c3fbedf, type: 3}
+  cherryClip: {fileID: 0}
+  pelletClip: {fileID: 0}
   manager: {fileID: 2062793076}
 --- !u!199 &1185215695549598560
 ParticleSystemRenderer:

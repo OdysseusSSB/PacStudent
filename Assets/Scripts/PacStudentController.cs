@@ -25,6 +25,10 @@ public class PacStudentController : MonoBehaviour
     private AudioClip footstepClip;
     [SerializeField]
     private AudioClip collisionClip;
+    [SerializeField]
+    private AudioClip cherryClip;
+    [SerializeField]
+    private AudioClip pelletClip;
     private bool isColliding = false;
     [SerializeField]
     private Manager manager;
@@ -159,5 +163,16 @@ public class PacStudentController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         manager.HandleCollision(other.gameObject);
+        switch(other.tag)
+        {
+            case "Cherry":
+            audioSource.PlayOneShot(cherryClip);
+            break;
+            case "Pellet":
+            audioSource.PlayOneShot(pelletClip);
+            break;
+            default:
+            break;
+        }
     }
 }

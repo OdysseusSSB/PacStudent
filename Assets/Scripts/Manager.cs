@@ -8,7 +8,8 @@ public class Manager : MonoBehaviour
     public TMP_Text timeDisplay;
     public TMP_Text ghostTimeDisplay;
     public TMP_Text scoreDisplay;
-
+    [SerializeField]
+    GameObject[] ghosts;
     private int score = 0;
     private float ghostUnscaredTime = 0f;
 
@@ -22,7 +23,18 @@ public class Manager : MonoBehaviour
     void Update()
     {
         timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
-        ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostUnscaredTime - Time.timeSinceLevelLoad);
+        float ghostTime = ghostUnscaredTime - Time.timeSinceLevelLoad;
+        ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostTime);
+        if(ghostTime < 3.0f && ghostTime >= 0)
+        {
+            foreach(GameObject ghost in ghosts)
+            {
+                Animator animator = ghost.GetComponent<Animator>();
+                animator.SetBool("IsScared", false);
+                animator.SetBool("IsRecovering", true);
+            }
+            Debug.Log("Ghosts recovering");
+        }
     }
 
     public void ChangeScore(int x)
@@ -33,11 +45,34 @@ public class Manager : MonoBehaviour
 
     public void HandleCollision(GameObject other)
     {
-        if(other.tag == "Pellet")
+        switch (other.tag)
         {
-            ChangeScore(10);
-            Destroy(other);
+            case "Pellet":
+                ChangeScore(10);
+                Destroy(other);
+                break;
+            case "Power Pill":
+                ChangeScore(50);
+                Destroy(other);
+                ScareGhosts();
+                break;
+            case "Cherry":
+                ChangeScore(100);
+                Destroy(other);
+                break;
+            default:
+                break;
         }
+    }
+
+    public void ScareGhosts()
+    {
+        foreach(GameObject ghost in ghosts)
+        {
+            ghost.GetComponent<Animator>().SetBool("IsScared", true);
+        }
+        ghostUnscaredTime = Time.timeSinceLevelLoad + 10f;
+        Debug.Log("Ghosts scared");
     }
 
     public void ExitLevel()
