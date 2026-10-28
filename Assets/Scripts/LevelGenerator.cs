@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class LevelGenerator : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] OldObjects;
@@ -208,6 +208,21 @@ public class NewMonoBehaviourScript : MonoBehaviour
     bool IsWall(int tileValue)
     {
         return tileValue == 1 || tileValue == 2 || tileValue == 3 || tileValue == 4 || tileValue == 7 || tileValue == 8;
+    }
+
+    public bool IsWall(Vector2 position)
+    {
+        int rows = levelMap.GetLength(0);
+        int cols = levelMap.GetLength(1);
+
+        // Inverse of the placement in Start():
+        //   x = j + 1 - rows / 2
+        //   y = -i + 0.5 + cols / 2
+        int j = Mathf.RoundToInt(position.x - 1f + (float)rows / 2);
+        int i = Mathf.RoundToInt(0.5f + (float)cols / 2 - position.y);
+
+        // Vector2Int uses x = column, y = row, matching the other overload
+        return IsWall(levelMap[i, j]);
     }
 
     // Update is called once per frame
