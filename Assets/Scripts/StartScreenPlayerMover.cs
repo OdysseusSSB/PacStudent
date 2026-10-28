@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class StartScreenPlayerMover : MonoBehaviour
 {
+    private const float MovementSpeed = 2f;
+
     [SerializeField]
     private GameObject player;
     Animator animator;
@@ -17,17 +19,20 @@ public class StartScreenPlayerMover : MonoBehaviour
         animator = player.GetComponent<Animator>();
         tweener = GetComponent<Tweener>();
         animator.SetInteger("Direction", 3);
-        animator.SetInteger("Speed", 1);
+        animator.SetFloat("Speed", 1f);
 
-        tweener.AddTween(player.transform, player.transform.position, positions[0], 0f, 2.5f);
-        nextMoveTime = 2.5f;
-        currentPositionIndex = 1;
+        Vector3 startPos = player.transform.position;
+        Vector3 endPos = positions[0];
+        float duration = (startPos - endPos).magnitude / MovementSpeed;
+        tweener.AddTween(player.transform, startPos, endPos, duration);
+        nextMoveTime = Time.time + duration;
+        currentPositionIndex = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Time.time >= nextMoveTime)
+        if(!tweener.TweenExists(player.transform) && Time.time >= nextMoveTime)
         {
             MoveToNextPosition();
         }
@@ -35,6 +40,7 @@ public class StartScreenPlayerMover : MonoBehaviour
 
     void MoveToNextPosition()
     {
+        currentPositionIndex++;
         if(currentPositionIndex >= positions.Length)
         {
             currentPositionIndex = 0;
@@ -58,10 +64,8 @@ public class StartScreenPlayerMover : MonoBehaviour
         }
         Vector3 startPos = player.transform.position;
         Vector3 endPos = positions[currentPositionIndex];
-        float duration = (startPos - endPos).magnitude / 2f; // Adjust the speed as needed
-        tweener.AddTween(player.transform, startPos, endPos, Time.time, duration);
-        currentPositionIndex++;
+        float duration = (startPos - endPos).magnitude / MovementSpeed;
+        tweener.AddTween(player.transform, startPos, endPos, duration);
         nextMoveTime = Time.time + duration;
-        Debug.Log($"Moving to position {currentPositionIndex - 1}: {endPos} over {duration} seconds.");
     }
 }
