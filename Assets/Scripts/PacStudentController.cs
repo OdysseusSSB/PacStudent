@@ -26,6 +26,8 @@ public class PacStudentController : MonoBehaviour
     [SerializeField]
     private AudioClip collisionClip;
     private bool isColliding = false;
+    [SerializeField]
+    private Manager manager;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -152,5 +154,10 @@ public class PacStudentController : MonoBehaviour
             default:
                 return Vector3.zero;
         }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        manager.HandleCollision(other.gameObject);
     }
 }

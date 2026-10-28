@@ -8,7 +8,6 @@ public class LevelGenerator : MonoBehaviour
     private GameObject PowerUpPrefab;
     [SerializeField]
     private GameObject PelletPrefab;
-
     [SerializeField]
     private Camera Camera;
 

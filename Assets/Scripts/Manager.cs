@@ -15,15 +15,29 @@ public class Manager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        scoreDisplay.text = FormatScore(score);
     }
 
     // Update is called once per frame
     void Update()
     {
         timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
-        scoreDisplay.text = FormatScore(score);
         ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostUnscaredTime - Time.timeSinceLevelLoad);
+    }
+
+    public void ChangeScore(int x)
+    {
+        score += x;
+        scoreDisplay.text = FormatScore(score);
+    }
+
+    public void HandleCollision(GameObject other)
+    {
+        if(other.tag == "Pellet")
+        {
+            ChangeScore(10);
+            Destroy(other);
+        }
     }
 
     public void ExitLevel()
