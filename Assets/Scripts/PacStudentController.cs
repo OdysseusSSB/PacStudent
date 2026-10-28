@@ -99,7 +99,20 @@ public class PacStudentController : MonoBehaviour
                 break;
         }
 
-        if(! level.IsWall(transform.position + DirectionToVector3(inputDirection))) // Collision check
+        Vector3 targetPosition = transform.position + DirectionToVector3(inputDirection);
+        if(! level.IsInYBound(targetPosition))
+        {
+            transform.position = new Vector3(transform.position.x, -transform.position.y, transform.position.z);
+            return;
+        }
+
+        if(! level.IsInXBound(targetPosition))
+        {
+            transform.position = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
+            return;
+        }
+
+        if(! level.IsWall(targetPosition)) // Collision check
         {
             direction = inputDirection;
             animator.SetInteger("Direction", (int)direction);

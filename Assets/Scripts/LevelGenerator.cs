@@ -207,7 +207,26 @@ public class LevelGenerator : MonoBehaviour
 
     bool IsWall(int tileValue)
     {
+        int cols = levelMap.GetLength(1);
         return tileValue == 1 || tileValue == 2 || tileValue == 3 || tileValue == 4 || tileValue == 7 || tileValue == 8;
+    }
+
+    public bool IsInYBound(Vector2 position)
+    {
+        int rows = levelMap.GetLength(0);
+        return position.y - 0.5f < (float)rows / 2 && position.y - 0.5f > - (float)rows / 2;
+    }
+
+    public bool IsInXBound(Vector2 position)
+    {
+        int cols = levelMap.GetLength(1);
+        return position.x < (float)cols / 2 && position.x > - (float)cols / 2;
+        /*int i = Mathf.RoundToInt(0.5f + (float)cols / 2 - position.y);
+        if(i < 0 || i >= levelMap.GetLength(1))
+        {
+            return false;
+        }
+        return true;*/
     }
 
     public bool IsWall(Vector2 position)
