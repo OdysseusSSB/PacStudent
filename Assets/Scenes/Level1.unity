@@ -10639,6 +10639,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1992551483}
   - component: {fileID: 1992551482}
+  - component: {fileID: 1992551485}
+  - component: {fileID: 1992551484}
   m_Layer: 0
   m_Name: Cherry
   m_TagString: Untagged
@@ -10693,7 +10695,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 3a2755dc83ed1634998e717c743ab9b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10714,12 +10716,37 @@ Transform:
   m_GameObject: {fileID: 1992551481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.5, y: 0.5, z: -0.1}
+  m_LocalPosition: {x: -15, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1992551484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992551481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bd6ad6d13a4fc4a8d0b52300cdfc4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Tweener
+--- !u!114 &1992551485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992551481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a805b65f20f9545a19cf330412a5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CherryController
+  level: {fileID: 1626282017}
 --- !u!1 &2062793074
 GameObject:
   m_ObjectHideFlags: 0
@@ -16175,11 +16202,11 @@ SceneRoots:
   - {fileID: 1301845673}
   - {fileID: 268565054}
   - {fileID: 1185215695549598553}
-  - {fileID: 1706195517}
   - {fileID: 6893933399526224922}
   - {fileID: 4634501344660531500}
   - {fileID: 8282909505135509926}
   - {fileID: 6602724424186167716}
+  - {fileID: 1706195517}
   - {fileID: 1481132659}
   - {fileID: 1655364323}
   - {fileID: 1041063707}

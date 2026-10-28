@@ -225,6 +225,16 @@ public class LevelGenerator : MonoBehaviour
         return IsWall(levelMap[i, j]);
     }
 
+    public int GetWidth()
+    {
+        return levelMap.GetLength(0);
+    }
+
+    public int GetHeight()
+    {
+        return levelMap.GetLength(1);
+    }
+
     // Update is called once per frame
     void Update()
     {
