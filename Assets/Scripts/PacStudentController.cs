@@ -5,7 +5,8 @@ enum Direction
     Up = 2,
     Down = 0,
     Left = 1,
-    Right = 3
+    Right = 3,
+    None = -1
 }
 
 public class PacStudentController : MonoBehaviour
@@ -16,7 +17,7 @@ public class PacStudentController : MonoBehaviour
     private AudioSource audioSource;
     private Tweener tweener;
     private KeyCode lastInput;
-    private Direction direction;
+    private Direction direction = Direction.None;
     private float lastAudioScheduled;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
@@ -24,10 +25,15 @@ public class PacStudentController : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        animator.SetInteger("Direction", (int)Direction.Right);
+        animator.SetFloat("Speed", 0f);
         tweener = GetComponent<Tweener>();
 
         audioSource = GetComponent<AudioSource>();
         lastAudioScheduled = -1f;
+
+        Debug.Log((int) direction);
+        Debug.Log(lastInput);
     }
 
     // Update is called once per frame
@@ -36,7 +42,7 @@ public class PacStudentController : MonoBehaviour
         EvaluateInput();
         if(! tweener.TweenExists(transform))
         {
-            animator.SetInteger("Direction", -1); // Reset to idle when not moving
+            animator.SetFloat("Speed", 0f); // Reset to idle when not moving
             lastAudioScheduled = Time.time; // Reset the last audio scheduled time when not moving
             Move();
         }
@@ -96,6 +102,7 @@ public class PacStudentController : MonoBehaviour
         {
             direction = inputDirection;
             animator.SetInteger("Direction", (int)direction);
+            Debug.Log((int)direction);
             tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
         }
         else if(! level.IsWall(transform.position + DirectionToVector3(direction)))
