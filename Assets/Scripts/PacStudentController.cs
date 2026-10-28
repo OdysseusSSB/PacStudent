@@ -31,9 +31,6 @@ public class PacStudentController : MonoBehaviour
 
         audioSource = GetComponent<AudioSource>();
         lastAudioScheduled = -1f;
-
-        Debug.Log((int) direction);
-        Debug.Log(lastInput);
     }
 
     // Update is called once per frame
@@ -102,7 +99,6 @@ public class PacStudentController : MonoBehaviour
         {
             direction = inputDirection;
             animator.SetInteger("Direction", (int)direction);
-            Debug.Log((int)direction);
             tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
         }
         else if(! level.IsWall(transform.position + DirectionToVector3(direction)))
