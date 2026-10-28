@@ -130,8 +130,9 @@ public class PacStudentController : MonoBehaviour
                 ParticleSystem collisionPSInstance = Instantiate(collisionPS, transform.position + DirectionToVector3(direction) * 0.5f, Quaternion.identity);
                 audioSource.PlayOneShot(collisionClip);
                 isColliding = true;
-                Debug.Log("Collided");
+                /*Debug.Log("Collided");
                 Debug.Log(collisionPSInstance);
+                */
             }
         }
     }
