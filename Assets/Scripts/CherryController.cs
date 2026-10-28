@@ -39,7 +39,7 @@ public class CherryController : MonoBehaviour
         }
 
         // Go to opposite side
-        tweener.AddTween(transform, transform.position, new Vector3(- transform.position.x, - transform.position.y + 1, 0), 5.0f);
+        tweener.AddTween(transform, transform.position, new Vector3(- transform.position.x, - transform.position.y + 1, 0), 10.0f);
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class CherryController : MonoBehaviour
         if(Time.time >= nextSpawn)
         {
             Spawn();
-            nextSpawn = Time.time + 10f;
+            nextSpawn = Time.time + 15f;
         }
     }
 }
