@@ -25,15 +25,21 @@ public class Manager : MonoBehaviour
         timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
         float ghostTime = ghostUnscaredTime - Time.timeSinceLevelLoad;
         ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostTime);
-        if(ghostTime < 3.0f && ghostTime >= 0)
+        if(ghostTime < 3.0f && ghostTime > 0)
         {
             foreach(GameObject ghost in ghosts)
             {
                 Animator animator = ghost.GetComponent<Animator>();
-                animator.SetBool("IsScared", false);
-                animator.SetBool("IsRecovering", true);
+                animator.SetInteger("State", 3);
             }
-            Debug.Log("Ghosts recovering");
+        }
+        else if(ghostTime <= 0)
+        {
+            foreach(GameObject ghost in ghosts)
+            {
+                Animator animator = ghost.GetComponent<Animator>();
+                animator.SetInteger("State", 0);
+            }
         }
     }
 
@@ -69,10 +75,9 @@ public class Manager : MonoBehaviour
     {
         foreach(GameObject ghost in ghosts)
         {
-            ghost.GetComponent<Animator>().SetBool("IsScared", true);
+            ghost.GetComponent<Animator>().SetInteger("State", 1);
         }
         ghostUnscaredTime = Time.timeSinceLevelLoad + 10f;
-        Debug.Log("Ghosts scared");
     }
 
     public void ExitLevel()
