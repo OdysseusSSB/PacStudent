@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class healthbar : MonoBehaviour
+public class Healthbar : MonoBehaviour
 {
     [SerializeField]
     private Sprite[] sprites;
@@ -38,5 +38,11 @@ public class healthbar : MonoBehaviour
         {
             this.GetComponent<Image>().sprite = sprites[sprites.Length - 1];
         }
+    }
+
+    public void SetHealth(int n)
+    {
+        health = n;
+        UpdateHealthBar(health);
     }
 }

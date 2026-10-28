@@ -10045,6 +10045,7 @@ MonoBehaviour:
   audioSource: {fileID: 1301845675}
   introMusic: {fileID: 8300000, guid: f7e2cf971975f3649b684b0084c74902, type: 3}
   loopMusic: {fileID: 8300000, guid: bc5a44cc061c59b43a1dcfbea2658cdb, type: 3}
+  scaredMusic: {fileID: 8300000, guid: 2b50b42df4af6fa40804e36706bc0b50, type: 3}
 --- !u!82 &1301845675
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10959,11 +10960,14 @@ MonoBehaviour:
   timeDisplay: {fileID: 1245380845}
   ghostTimeDisplay: {fileID: 855155261}
   scoreDisplay: {fileID: 1732575127}
+  lifeIndicator: {fileID: 1418986677}
   ghosts:
   - {fileID: 6893933399526224926}
   - {fileID: 2007901915}
   - {fileID: 80072053}
   - {fileID: 414780908}
+  pacStudent: {fileID: 1185215695549598559}
+  musicManager: {fileID: 1301845674}
 --- !u!1 &2083016644
 GameObject:
   m_ObjectHideFlags: 0
@@ -11476,6 +11480,8 @@ MonoBehaviour:
   collisionClip: {fileID: 8300000, guid: 12bb52943e171e149a6806d78c3fbedf, type: 3}
   cherryClip: {fileID: 8300000, guid: bd2845a71c1c4204db0afa726ac6fe0b, type: 3}
   pelletClip: {fileID: 8300000, guid: 906f4391bf3746749bb40ea3f2d6b14f, type: 3}
+  deathClip: {fileID: 8300000, guid: 9fe73e6db461dd44189a66d2393c1db9, type: 3}
+  ghostEatClip: {fileID: 8300000, guid: 57f8ea69f5dcaec42b507a8c51034bab, type: 3}
   manager: {fileID: 2062793076}
 --- !u!199 &1185215695549598560
 ParticleSystemRenderer:

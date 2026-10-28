@@ -11,7 +11,12 @@ enum Direction
 
 public class PacStudentController : MonoBehaviour
 {
-    Animator animator;
+    private static readonly int DirectionParameter = Animator.StringToHash("Direction");
+    private static readonly int AliveParameter = Animator.StringToHash("Alive");
+    private static readonly int SpeedParameter = Animator.StringToHash("Speed");
+    private static readonly int DeathState = Animator.StringToHash("Base Layer.Player Death");
+
+    private Animator animator;
     [SerializeField]
     private LevelGenerator level;
     private AudioSource audioSource;
@@ -19,6 +24,7 @@ public class PacStudentController : MonoBehaviour
     private KeyCode lastInput;
     private Direction direction = Direction.None;
     private float lastAudioScheduled;
+    private Vector3 startPosition;
     [SerializeField]
     private ParticleSystem collisionPS;
     [SerializeField]
@@ -29,27 +35,55 @@ public class PacStudentController : MonoBehaviour
     private AudioClip cherryClip;
     [SerializeField]
     private AudioClip pelletClip;
+    [SerializeField]
+    private AudioClip deathClip;
+    [SerializeField]
+    private AudioClip ghostEatClip;
     private bool isColliding = false;
+    private bool isDying;
+    private bool waitingForInput;
     [SerializeField]
     private Manager manager;
-    void Start()
+
+    private const float DeathAnimationDuration = 0.52f;
+
+    void Awake()
     {
         animator = GetComponent<Animator>();
-        animator.SetInteger("Direction", (int)Direction.Right);
-        animator.SetFloat("Speed", 0f);
-        tweener = GetComponent<Tweener>();
-
         audioSource = GetComponent<AudioSource>();
+        tweener = GetComponent<Tweener>();
+        startPosition = transform.position;
+    }
+
+    void Start()
+    {
+        animator.SetInteger(DirectionParameter, (int)Direction.Right);
+        animator.SetFloat(SpeedParameter, 0f);
         lastAudioScheduled = -1f;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (isDying)
+        {
+            return;
+        }
+
         EvaluateInput();
+        if (waitingForInput)
+        {
+            if (lastInput == KeyCode.None)
+            {
+                return;
+            }
+
+            waitingForInput = false;
+        }
+
         if(! tweener.TweenExists(transform))
         {
-            animator.SetFloat("Speed", 0f); // Reset to idle when not moving
+            animator.SetFloat(SpeedParameter, 0f); // Reset to idle when not moving
             lastAudioScheduled = Time.time; // Reset the last audio scheduled time when not moving
             Move();
         }
@@ -121,7 +155,7 @@ public class PacStudentController : MonoBehaviour
         if(! level.IsWall(targetPosition)) // Collision check
         {
             direction = inputDirection;
-            animator.SetInteger("Direction", (int)direction);
+            animator.SetInteger(DirectionParameter, (int)direction);
             tweener.AddTween(transform, transform.position, transform.position + DirectionToVector3(direction), Time.time, 0.2f);
             isColliding = false;
         }
@@ -162,6 +196,11 @@ public class PacStudentController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDying || waitingForInput)
+        {
+            return;
+        }
+
         manager.HandleCollision(other.gameObject);
         switch(other.tag)
         {
@@ -174,5 +213,47 @@ public class PacStudentController : MonoBehaviour
             default:
             break;
         }
+    }
+
+    public float BeginDeathSequence()
+    {
+        isDying = true;
+        waitingForInput = false;
+        lastInput = KeyCode.None;
+        direction = Direction.None;
+        tweener.CancelTween(transform);
+        audioSource.Stop();
+        animator.SetFloat(SpeedParameter, 0f);
+        animator.SetBool(AliveParameter, false);
+        animator.Play(DeathState, 0, 0f);
+        audioSource.PlayOneShot(deathClip);
+
+        ParticleSystem deathEffect = Instantiate(collisionPS, transform.position, Quaternion.identity);
+        ParticleSystem.MainModule main = deathEffect.main;
+        main.loop = false;
+        main.stopAction = ParticleSystemStopAction.Destroy;
+        deathEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        deathEffect.Play();
+
+        return DeathAnimationDuration;
+    }
+
+    public void PlayGhostEatSound()
+    {
+        audioSource.PlayOneShot(ghostEatClip);
+    }
+
+    public void Reset()
+    {
+        tweener.CancelTween(transform);
+        transform.position = startPosition;
+        animator.SetBool(AliveParameter, true);
+        animator.SetInteger(DirectionParameter, (int)Direction.Right);
+        animator.SetFloat(SpeedParameter, 0f);
+        direction = Direction.None;
+        lastInput = KeyCode.None;
+        lastAudioScheduled = Time.time;
+        isDying = false;
+        waitingForInput = true;
     }
 }

@@ -8,6 +8,11 @@ public class MusicManager : MonoBehaviour
     private AudioClip introMusic;
     [SerializeField]
     private AudioClip loopMusic;
+    [SerializeField]
+    private AudioClip scaredMusic;
+
+    private bool scaredMode;
+    private bool loopMusicStarted;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,7 +30,28 @@ public class MusicManager : MonoBehaviour
 
     private void PlayLoopMusic()
     {
-        audioSource.clip = loopMusic;
+        loopMusicStarted = true;
+        PlayCurrentMusic();
+    }
+
+    public void SetScaredMode(bool enabled)
+    {
+        if (scaredMode == enabled)
+        {
+            return;
+        }
+
+        scaredMode = enabled;
+        if (loopMusicStarted)
+        {
+            PlayCurrentMusic();
+        }
+    }
+
+    private void PlayCurrentMusic()
+    {
+        audioSource.Stop();
+        audioSource.clip = scaredMode ? scaredMusic : loopMusic;
         audioSource.loop = true;
         audioSource.Play();
     }

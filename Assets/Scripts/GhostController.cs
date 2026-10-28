@@ -1,6 +1,6 @@
 using UnityEngine;
 
-enum State
+public enum GhostState
 {
     NORMAL = 0,
     SCARED = 1,
@@ -10,41 +10,91 @@ enum State
 
 public class GhostController : MonoBehaviour
 {
-    private State state = State.NORMAL;
+    private GhostState state = GhostState.NORMAL;
     private Animator animator;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Vector3 home;
+    private bool isPaused;
+    private float animatorSpeed = 1f;
+    private int stateVersion;
+
+    void Awake()
     {
         animator = GetComponent<Animator>();
+        home = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public GhostState State => state;
+    public int StateVersion => stateVersion;
 
     public void Recover()
     {
-        state = State.RECOVERING;
-        animator.SetInteger("State", (int)state);
+        if (state == GhostState.DEAD || state == GhostState.RECOVERING)
+        {
+            return;
+        }
+
+        SetState(GhostState.RECOVERING);
     }
 
     public void BeNormal()
     {
-        state = State.NORMAL;
-        animator.SetInteger("State", (int)state);
+        if (state == GhostState.NORMAL)
+        {
+            return;
+        }
+
+        SetState(GhostState.NORMAL);
     }
 
     public void Scare()
     {
-        state = State.SCARED;
-        animator.SetInteger("State", (int)state);
+        if (state == GhostState.DEAD || state == GhostState.SCARED)
+        {
+            return;
+        }
+
+        SetState(GhostState.SCARED);
     }
 
-    public void Die()
+    public int Die()
     {
-        state = State.DEAD;
+        if (state != GhostState.DEAD)
+        {
+            SetState(GhostState.DEAD);
+        }
+
+        return stateVersion;
+    }
+
+    public void SetPaused(bool paused)
+    {
+        if (isPaused == paused)
+        {
+            return;
+        }
+
+        isPaused = paused;
+        if (paused)
+        {
+            animatorSpeed = animator.speed;
+            animator.speed = 0f;
+        }
+        else
+        {
+            animator.speed = animatorSpeed;
+        }
+    }
+
+    public void Reset()
+    {
+        stateVersion++;
+        transform.position = home;
+        BeNormal();
+    }
+
+    private void SetState(GhostState newState)
+    {
+        state = newState;
         animator.SetInteger("State", (int)state);
     }
 }
