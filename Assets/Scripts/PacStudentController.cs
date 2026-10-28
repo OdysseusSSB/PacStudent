@@ -247,6 +247,14 @@ public class PacStudentController : MonoBehaviour
         audioSource.PlayOneShot(ghostEatClip);
     }
 
+    public void StopMovement()
+    {
+        tweener.CancelTween(transform);
+        lastInput = KeyCode.None;
+        direction = Direction.None;
+        animator.SetFloat(SpeedParameter, 0f);
+    }
+
     public void Reset()
     {
         tweener.CancelTween(transform);

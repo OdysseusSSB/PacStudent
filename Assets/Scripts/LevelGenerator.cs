@@ -30,6 +30,8 @@ public class LevelGenerator : MonoBehaviour
         {0,0,0,0,0,0,5,0,0,0,4,0,0,0},
         };
 
+    private int pellets;
+
     [SerializeField]
     private GameObject tilePrefab;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -70,11 +72,16 @@ public class LevelGenerator : MonoBehaviour
                 if (levelMap[i, j] == 5)
                 {
                     Instantiate(PelletPrefab, new Vector3(j + 1 - (float)rows / 2, -i + 0.5f + (float)cols / 2, -0.1f), Quaternion.identity);
+                    pellets++;
                 }
             }
         }
     }
 
+    public int GetPellets()
+    {
+        return pellets;
+    }
     int[,] MirrorLevelMap(int[,] originalMap)
     {
         int rows = originalMap.GetLength(0);

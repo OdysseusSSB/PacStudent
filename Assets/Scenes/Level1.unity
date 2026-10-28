@@ -11062,6 +11062,7 @@ MonoBehaviour:
   - {fileID: 414780908}
   pacStudent: {fileID: 1185215695549598559}
   musicManager: {fileID: 1301845674}
+  levelGenerator: {fileID: 1626282017}
 --- !u!1 &2083016644
 GameObject:
   m_ObjectHideFlags: 0

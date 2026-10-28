@@ -18,12 +18,15 @@ public class Manager : MonoBehaviour
     PacStudentController pacStudent;
     [SerializeField]
     MusicManager musicManager;
+    public LevelGenerator levelGenerator;
     private int score = 0;
     private int health = 3;
     private float ghostUnscaredTime = 0f;
     private bool playerDeathSequenceActive;
     private float startTime;
     private bool active;
+    private bool gameOverSequenceRunning;
+    private int pellets = -1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*void Awake()
@@ -65,6 +68,7 @@ public class Manager : MonoBehaviour
         musicManager.PlayLoopMusic();
         active = true;
         startTime = Time.timeSinceLevelLoad;
+        pellets = levelGenerator.GetPellets();
     }
 
     // Update is called once per frame
@@ -100,6 +104,52 @@ public class Manager : MonoBehaviour
                 }
             }
         }
+        if(pellets == 0)
+        {
+            GameOver();
+        }
+    }
+
+    private void GameOver()
+    {
+        if (gameOverSequenceRunning)
+        {
+            return;
+        }
+
+        gameOverSequenceRunning = true;
+        active = false;
+        pacStudent.active = false;
+        pacStudent.StopMovement();
+
+        Button[] buttons = FindObjectsByType<Button>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        foreach (Button button in buttons)
+        {
+            button.interactable = false;
+        }
+
+        foreach (GhostController ghost in ghosts)
+        {
+            ghost.SetPaused(true);
+        }
+
+        Time.timeScale = 0f;
+        StartCoroutine(GameOverSequence());
+    }
+
+    private IEnumerator GameOverSequence()
+    {
+        countdown.gameObject.SetActive(true);
+
+        cover.GetComponent<SpriteRenderer>().enabled = true;
+        countdown.text = "Game over";
+        yield return new WaitForSecondsRealtime(1f);
+
+        countdown.text = "Score: " + score;
+        yield return new WaitForSecondsRealtime(1f);
+
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("StartScene");
     }
 
     public void ChangeScore(int x)
@@ -110,11 +160,17 @@ public class Manager : MonoBehaviour
 
     public void HandleCollision(GameObject other)
     {
+        if (!active || gameOverSequenceRunning)
+        {
+            return;
+        }
+
         switch (other.tag)
         {
             case "Pellet":
                 ChangeScore(10);
                 Destroy(other);
+                pellets -= 1;
                 break;
             case "Power Pill":
                 ChangeScore(50);
@@ -142,16 +198,21 @@ public class Manager : MonoBehaviour
 
         if (!ghost.TryGetComponent(out GhostController ghostController))
         {
-            Debug.LogError($"Ghost object '{ghost.name}' is missing a GhostController.", ghost);
             return;
         }
 
         if (ghostController.State == GhostState.NORMAL)
         {
-            health = Mathf.Max(0, health - 1);
-            lifeIndicator.SetHealth(health);
-            playerDeathSequenceActive = true;
-            StartCoroutine(PlayerDeathSequence());
+            health--;
+            if(health < 1)
+            {
+                GameOver();
+            }
+            else {
+                lifeIndicator.SetHealth(health);
+                playerDeathSequenceActive = true;
+                StartCoroutine(PlayerDeathSequence());
+            }
         }
         else if (ghostController.State == GhostState.SCARED
                  || ghostController.State == GhostState.RECOVERING)
@@ -221,6 +282,12 @@ public class Manager : MonoBehaviour
 
     public void ExitLevel()
     {
+        if (gameOverSequenceRunning)
+        {
+            return;
+        }
+
+        Time.timeScale = 1f;
         SceneManager.LoadScene("StartScene");
     }
 
