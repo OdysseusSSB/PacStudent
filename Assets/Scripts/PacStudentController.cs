@@ -19,9 +19,12 @@ public class PacStudentController : MonoBehaviour
     private KeyCode lastInput;
     private Direction direction = Direction.None;
     private float lastAudioScheduled;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    private ParticleSystem collisionPS;
     [SerializeField]
     private AudioClip footstepClip;
+    [SerializeField]
+    private AudioClip collisionClip;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -107,7 +110,10 @@ public class PacStudentController : MonoBehaviour
         }
         else
         {
-            // Set animation speed to 0
+            collisionPS.emission.SetBursts(new ParticleSystem.Burst[]
+            {
+                new ParticleSystem.Burst(2.0f, 100)
+            });
         }
     }
 

@@ -10139,6 +10139,11 @@ MonoBehaviour:
   soundEffects:
   - soundEffect: 0
     clip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
+--- !u!198 &1364317220 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8307689532707429994, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+  m_PrefabInstance: {fileID: 1185215695549598553}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1418986673
 GameObject:
   m_ObjectHideFlags: 0
@@ -11034,6 +11039,18 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3172072406194168039, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172072406194168039, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3172072406194168039, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4652301619854453156, guid: d347bf0f2c742d1468c28fd25b1b2523, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.5
@@ -11220,7 +11237,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PacStudentController
   level: {fileID: 1626282017}
+  collisionPS: {fileID: 1364317220}
   footstepClip: {fileID: 8300000, guid: 6ba79411f03dc2e488bfeef26ce8b2bc, type: 3}
+  collisionClip: {fileID: 8300000, guid: 12bb52943e171e149a6806d78c3fbedf, type: 3}
 --- !u!199 &1185215695549598560
 ParticleSystemRenderer:
   serializedVersion: 7
