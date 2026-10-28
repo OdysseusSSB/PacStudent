@@ -19,16 +19,14 @@ public class MusicManager : MonoBehaviour
     {
         audioSource.clip = introMusic;
         audioSource.Play();
-        Invoke(nameof(StopIntroMusic), 3f);
-        Invoke(nameof(PlayLoopMusic), 3f);
     }
 
-    private void StopIntroMusic()
+    public void StopIntroMusic()
     {
         audioSource.Stop();
     }
 
-    private void PlayLoopMusic()
+    public void PlayLoopMusic()
     {
         loopMusicStarted = true;
         PlayCurrentMusic();

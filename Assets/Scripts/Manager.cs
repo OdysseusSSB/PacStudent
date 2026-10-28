@@ -10,6 +10,8 @@ public class Manager : MonoBehaviour
     public TMP_Text ghostTimeDisplay;
     public TMP_Text scoreDisplay;
     public Healthbar lifeIndicator;
+    public TMP_Text countdown;
+    public GameObject cover;
     [SerializeField]
     GhostController[] ghosts;
     [SerializeField]
@@ -20,6 +22,8 @@ public class Manager : MonoBehaviour
     private int health = 3;
     private float ghostUnscaredTime = 0f;
     private bool playerDeathSequenceActive;
+    private float startTime;
+    private bool active;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     /*void Awake()
@@ -32,12 +36,42 @@ public class Manager : MonoBehaviour
     {
         scoreDisplay.text = FormatScore(score);
         lifeIndicator.SetHealth(health);
+        pacStudent.active = false;
+        StartCoroutine(StartCountdown());
+    }
+
+    private IEnumerator StartCountdown()
+    {
+        countdown.gameObject.SetActive(true);
+
+        cover.GetComponent<SpriteRenderer>().enabled = true;
+        countdown.text = "3";
+        yield return new WaitForSeconds(1f);
+
+        countdown.text = "2";
+        yield return new WaitForSeconds(1f);
+
+        countdown.text = "1";
+        yield return new WaitForSeconds(1f);
+
+        countdown.text = "GO";
+        yield return new WaitForSeconds(1f);
+
+        
+        countdown.gameObject.SetActive(false);
+        pacStudent.active = true;
+        cover.GetComponent<SpriteRenderer>().enabled = false;
+        musicManager.StopIntroMusic();
+        musicManager.PlayLoopMusic();
+        active = true;
+        startTime = Time.timeSinceLevelLoad;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timeDisplay.text = FormatTime(Time.timeSinceLevelLoad);
+        if(!active) return;
+        timeDisplay.text = FormatTime(Time.timeSinceLevelLoad - startTime);
         float ghostTime = ghostUnscaredTime - Time.timeSinceLevelLoad;
         ghostTimeDisplay.text = FormatGhostUnscaredTime(ghostTime);
 

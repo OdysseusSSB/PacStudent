@@ -42,6 +42,7 @@ public class PacStudentController : MonoBehaviour
     private bool isColliding = false;
     private bool isDying;
     private bool waitingForInput;
+    public bool active = false;
     [SerializeField]
     private Manager manager;
 
@@ -65,34 +66,37 @@ public class PacStudentController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isDying)
+        if(active)
         {
-            return;
-        }
-
-        EvaluateInput();
-        if (waitingForInput)
-        {
-            if (lastInput == KeyCode.None)
+            if(isDying)
             {
                 return;
             }
 
-            waitingForInput = false;
-        }
-
-        if(! tweener.TweenExists(transform))
-        {
-            animator.SetFloat(SpeedParameter, 0f); // Reset to idle when not moving
-            lastAudioScheduled = Time.time; // Reset the last audio scheduled time when not moving
-            Move();
-        }
-        else
-        {
-            if (Time.time >= lastAudioScheduled + 0.1f)
+            EvaluateInput();
+            if (waitingForInput)
             {
-                audioSource.PlayOneShot(footstepClip);
-                lastAudioScheduled = Time.time;
+                if (lastInput == KeyCode.None)
+                {
+                    return;
+                }
+
+                waitingForInput = false;
+            }
+
+            if(! tweener.TweenExists(transform))
+            {
+                animator.SetFloat(SpeedParameter, 0f); // Reset to idle when not moving
+                lastAudioScheduled = Time.time; // Reset the last audio scheduled time when not moving
+                Move();
+            }
+            else
+            {
+                if (Time.time >= lastAudioScheduled + 0.1f)
+                {
+                    audioSource.PlayOneShot(footstepClip);
+                    lastAudioScheduled = Time.time;
+                }
             }
         }
     }
@@ -194,9 +198,9 @@ public class PacStudentController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
-        if (isDying || waitingForInput)
+        if (!active || isDying || waitingForInput)
         {
             return;
         }
