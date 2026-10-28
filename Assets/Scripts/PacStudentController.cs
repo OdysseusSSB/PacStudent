@@ -48,7 +48,7 @@ public class PacStudentController : MonoBehaviour
         }
         else
         {
-            if (Time.time >= lastAudioScheduled + 0.5f)
+            if (Time.time >= lastAudioScheduled + 0.1f)
             {
                 audioSource.PlayOneShot(footstepClip);
                 lastAudioScheduled = Time.time;
