@@ -32,6 +32,11 @@ public class Tweener : MonoBehaviour
         return activeTweens.Exists(t => t.Target == target);
     }
 
+    public void CancelTween(Transform target)
+    {
+        activeTweens.RemoveAll(t => t.Target == target);
+    }
+
     public void AddTween(Transform target, Vector3 startPos, Vector3 endPos, float duration)
     {
         activeTweens.Add(new Tween(target, startPos, endPos, Time.time, duration));
